@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <import resource="beans.xml"/>
+    <bean id="factory" class="com.kang.util.DynamicFactory"/>
+    <bean id="studentDao2" factory-bean="factory" factory-method="getStudentDao"/>
+
+    <bean id="studentBiz" class="com.kang.biz.impl.StudentBizImpl" p:studentDao-ref="studentDao" init-method="init"
+          destroy-method="destroy"/>
+
+    <bean id="myAdvisor" class="com.kang.util.MyAdvisor"/>
+    <aop:config>
+        <aop:aspect ref="myAdvisor">
+            <aop:pointcut id="myPoint" expression="execution(public String com.kang.dao.StudentDao.save())"/>
+            <aop:before method="before" pointcut-ref="myPoint"/>
+            <aop:after method="after" pointcut-ref="myPoint"/>
+            <aop:after-returning method="afterReturning" pointcut-ref="myPoint"/>
+            <aop:around method="around" pointcut-ref="myPoint"></aop:around>
+        </aop:aspect>
+    </aop:config>
+</beans>

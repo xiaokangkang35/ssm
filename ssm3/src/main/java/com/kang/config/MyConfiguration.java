@@ -1,0 +1,18 @@
+package com.kang.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+
+import java.util.Date;
+
+@Configuration
+@ComponentScan("com.kang")
+@EnableAspectJAutoProxy
+public class MyConfiguration {
+    @Bean
+    public Date getDate(){
+        return new Date();
+    }
+}
