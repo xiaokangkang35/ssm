@@ -25,4 +25,22 @@
 
     </bean>
 
+    <mvc:interceptors>
+<!--        全局拦截-->
+<!--        <bean class="com.kang.utils.MyInterceptor"></bean>-->
+<!--        局部拦截-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+<!--            不拦截-->
+            <mvc:exclude-mapping path="/loginForm"/>
+            <mvc:exclude-mapping path="/login"/>
+            <bean class="com.kang.utils.MyInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+<!--    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
+<!--        <property name="defaultErrorView" value="error"></property>-->
+<!--        <property name="exceptionAttribute" value="er"></property>-->
+<!--    </bean>-->
+<!--    <bean class="com.kang.utils.MyExceptionHandle"></bean>-->
 </beans>
